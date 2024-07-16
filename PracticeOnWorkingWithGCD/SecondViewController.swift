@@ -30,6 +30,29 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchImage()
+        loginAlert()
+    }
+    
+    fileprivate func loginAlert(){
+        let alertController = UIAlertController(
+                                                title: "Вы прошли регистрацию?",
+                                                message: "Введите ваш логин и пароль",
+                                                preferredStyle: .alert
+                                               )
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        
+        alertController.addAction(okAction)
+        alertController.addAction(cancelAction)
+        alertController.addTextField { (userNameTextField) in
+            userNameTextField.placeholder = "Введите логин"
+        }
+        alertController.addTextField { userPasswordTextField in
+            userPasswordTextField.placeholder = "Введите пароль"
+            userPasswordTextField.isSecureTextEntry = true
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     fileprivate func fetchImage() {
@@ -38,7 +61,7 @@ class SecondViewController: UIViewController {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         
-        let queue = DispatchQueue.global(qos: .utility)                                                 
+        let queue = DispatchQueue.global(qos: .utility)
         queue.async {
             guard let url = self.imageURL, let imageData = try? Data(contentsOf: url) else { return }
             DispatchQueue.main.async {
