@@ -30,7 +30,13 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchImage()
-        loginAlert()
+        delay(3) { self.loginAlert() }
+    }
+    
+    fileprivate func delay(_ delayTime: Int, closure: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delayTime)) {
+            closure()
+        }
     }
     
     fileprivate func loginAlert(){
@@ -44,6 +50,7 @@ class SecondViewController: UIViewController {
         
         alertController.addAction(okAction)
         alertController.addAction(cancelAction)
+        
         alertController.addTextField { (userNameTextField) in
             userNameTextField.placeholder = "Введите логин"
         }
